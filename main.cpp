@@ -7,8 +7,7 @@
 
 class EllipseWidget : public QWidget {
 public:
-    EllipseWidget(QWidget *parent = nullptr) : QWidget(parent), m_x(0) {
-        
+    EllipseWidget(QWidget *parent = nullptr) : QWidget(parent), m_x(0) {        
 
         m_intervalLineEdit = new QLineEdit(this);
         m_intervalLineEdit->setText("50");
@@ -19,10 +18,11 @@ public:
         m_widthButton->setGeometry(100, 10, 80, 30);
         connect(m_widthButton, &QPushButton::clicked, this, &EllipseWidget::onWidthButtonClicked);
 
-        
+        m_heightButton = new QPushButton(this);
+        m_heightButton->setText("Height");
+        m_heightButton->setGeometry(190, 10, 80, 30);
+        connect(m_heightButton, &QPushButton::clicked, this, &EllipseWidget::onHeightButtonClicked);
     }
-
-
 
 private slots:
     
@@ -32,13 +32,16 @@ private slots:
         m_intervalLineEdit->setFixedWidth(width + 10);
     }
 
-    
+    void onHeightButtonClicked() {
+        int height = m_intervalLineEdit->height();
+        m_intervalLineEdit->setFixedHeight(height + 10);
+    }
 
 private:
     int m_x;
     QLineEdit *m_intervalLineEdit;
     QPushButton *m_widthButton;
-    
+    QPushButton *m_heightButton;
 };
 
 int main(int argc, char *argv[]) {
