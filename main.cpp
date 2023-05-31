@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
     EllipseWidget *widget = new EllipseWidget();
-    widget->setFixedSize(400, 200);
+    widget->setFixedSize(600, 400);
     widget->show();
 
     return app.exec();
