@@ -1,14 +1,40 @@
 #include <QApplication>
 #include <QWidget>
 #include <QLabel>
-
+#include <QPushButton>
+#include <QHBoxLayout>
 
 class FontSizeChanger : public QWidget {
 public:
     FontSizeChanger(QWidget *parent = nullptr) : QWidget(parent) {
-        setFixedSize(400, 200);
+        QLabel *label = new QLabel("Hello, World!", this);
+        QPushButton *plusButton = new QPushButton("+", this);        
+        QLabel *sizeLabel = new QLabel(QString::number(label->font().pointSize()), this);
+
+       
+        QHBoxLayout *layout = new QHBoxLayout(this);
+        layout->addWidget(label);
+        layout->addWidget(plusButton);
+                layout->addWidget(sizeLabel);
+
+        
+        connect(plusButton, &QPushButton::clicked, this, &FontSizeChanger::increaseFontSize);
+           
+        setFixedSize(600, 400);
+    }
+
+private slots:
+    void increaseFontSize() {
+        QLabel *label = findChild<QLabel *>();
+        QFont font = label->font();
+        font.setPointSize(font.pointSize() + 1);
+        label->setFont(font);
+
+        QLabel *sizeLabel = findChild<QLabel *>(QString(), Qt::FindDirectChildrenOnly);
+        sizeLabel->setText(QString::number(font.pointSize()));
     }
 };
+
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
