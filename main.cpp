@@ -4,7 +4,12 @@
 #include <QTimer>
 
 class EllipseWidget : public QWidget {
-
+public:
+    EllipseWidget(QWidget *parent = nullptr) : QWidget(parent), m_x(0) {
+        QTimer *timer = new QTimer(this);
+        connect(timer, &QTimer::timeout, this, &EllipseWidget::onTimer);
+        timer->start(10);
+    }
 
 protected:
     void paintEvent(QPaintEvent *) override {
@@ -14,7 +19,13 @@ protected:
         painter.drawEllipse(m_x, height() / 2, 50, 50);
     }
 
-
+private slots:
+    void onTimer() {
+        m_x += 1;
+        if (m_x >= width())
+            m_x = 0;
+        update();
+    }
 
 private:
     int m_x;
